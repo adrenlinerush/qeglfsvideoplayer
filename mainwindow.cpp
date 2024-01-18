@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
     videoWidget = new QVideoWidget;
     mediaPlayer->setVideoOutput(videoWidget);
 
+    dir = QDir::currentPath();
+
     shortcut_quit = new QShortcut(QKeySequence("Q"), this);
     connect(shortcut_quit, &QShortcut::activated, qApp, &QApplication::quit);
     shortcut_toggle_play_pause = new QShortcut(QKeySequence("P"), this);
@@ -15,11 +17,21 @@ MainWindow::MainWindow(QWidget *parent)
     connect(shortcut_ff, &QShortcut::activated, this, &MainWindow::ff);
     shortcut_rw = new QShortcut(QKeySequence(Qt::Key_Left), this);
     connect(shortcut_rw, &QShortcut::activated, this, &MainWindow::rw);
+    shortcut_vol_up = new QShortcut(QKeySequence(Qt::Key_Up), this);
+    connect(shortcut_vol_up, &QShortcut::activated, this, &MainWindow::volUp);
+    shortcut_vol_down = new QShortcut(QKeySequence(Qt::Key_Down), this);
+    connect(shortcut_vol_down, &QShortcut::activated, this, &MainWindow::volDown);
 
+    connect(mediaPlayer, &QMediaPlayer::stateChanged, this, &MainWindow::mediaStateChanged);
+
+    setStyleSheet("background-color: black;");
     setCentralWidget(videoWidget);
 }
 
 void MainWindow::playVideoFile(QString videoFile){
+    if (videoFile.front() != "/") {
+	    videoFile = dir + "/" +  videoFile;
+    }
     mediaPlayer->setMedia(QUrl::fromLocalFile(videoFile));
     mediaPlayer->play();
 }
@@ -43,4 +55,22 @@ void MainWindow::rw()
 {
     int pos = mediaPlayer->position();
     mediaPlayer->setPosition(pos-5000);
+}
+
+void MainWindow::volUp()
+{
+    int vol = mediaPlayer->volume();
+    mediaPlayer->setVolume(vol+10);
+}
+void MainWindow::volDown()
+{
+    int vol = mediaPlayer->volume();
+    mediaPlayer->setVolume(vol-10);
+}
+
+void MainWindow::mediaStateChanged(QMediaPlayer::State state)
+{
+    if (state == QMediaPlayer::StoppedState) {
+        qApp->quit();
+    } 
 }

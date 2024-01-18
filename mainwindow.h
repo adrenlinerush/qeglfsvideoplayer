@@ -15,6 +15,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QMainWindow>
+#include <QDir>
 
 
 class MainWindow : public QMainWindow {
@@ -29,6 +30,9 @@ private slots:
     void play();
     void ff();
     void rw();
+    void volUp();
+    void volDown();
+    void mediaStateChanged(QMediaPlayer::State state);
 
 private:
     QMediaPlayer* mediaPlayer;
@@ -37,7 +41,9 @@ private:
     QShortcut* shortcut_quit;
     QShortcut* shortcut_ff;
     QShortcut* shortcut_rw;
-
+    QShortcut* shortcut_vol_up;
+    QShortcut* shortcut_vol_down;
+    QString dir;
 
 };
 

@@ -1,0 +1,5 @@
+qeglfsvideoplayer
+Makefile
+*.qmake.stash
+*.o
+*.swp
