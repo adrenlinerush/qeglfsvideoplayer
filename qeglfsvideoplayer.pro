@@ -16,6 +16,10 @@ INCLUDEPATH += .
 
 # Input
 SOURCES += \
+    mainwindow.cpp \
     main.cpp
 
 CONFIG+=debug
+
+HEADERS += \
+    mainwindow.h 
