@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 
     mainWindow->playVideoFile(args.at(0));
 
+    qApp->setOverrideCursor( QCursor( Qt::BlankCursor ) );
     mainWindow->show();
     return app.exec();
 }
