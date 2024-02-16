@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     mainWindow->playVideoFile(args.at(0));
 
     qApp->setOverrideCursor( QCursor( Qt::BlankCursor ) );
+    mainWindow->resize(1024,768);
     mainWindow->show();
     return app.exec();
 }
