@@ -33,17 +33,20 @@ private slots:
     void volUp();
     void volDown();
     void mediaStateChanged(QMediaPlayer::State state);
+    void toggleFullScreen();
 
 private:
     QMediaPlayer* mediaPlayer;
     QVideoWidget* videoWidget;
     QShortcut* shortcut_toggle_play_pause;
+    QShortcut* shortcut_toggle_full_screen;
     QShortcut* shortcut_quit;
     QShortcut* shortcut_ff;
     QShortcut* shortcut_rw;
     QShortcut* shortcut_vol_up;
     QShortcut* shortcut_vol_down;
     QString dir;
+    bool fs;
 
 };
 

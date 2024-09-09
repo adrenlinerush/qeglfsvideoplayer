@@ -3,6 +3,7 @@
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent) {
 	
+    fs = false;
     mediaPlayer = new QMediaPlayer;
     videoWidget = new QVideoWidget;
     mediaPlayer->setVideoOutput(videoWidget);
@@ -23,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(shortcut_vol_down, &QShortcut::activated, this, &MainWindow::volDown);
 
     connect(mediaPlayer, &QMediaPlayer::stateChanged, this, &MainWindow::mediaStateChanged);
+
+    shortcut_toggle_full_screen = new QShortcut(QKeySequence("F"), this);
+    connect(shortcut_toggle_full_screen, &QShortcut::activated, this, &MainWindow::toggleFullScreen);
 
     setStyleSheet("background-color: black;");
     setCentralWidget(videoWidget);
@@ -73,4 +77,17 @@ void MainWindow::mediaStateChanged(QMediaPlayer::State state)
     if (state == QMediaPlayer::StoppedState) {
         qApp->quit();
     } 
+}
+
+void MainWindow::toggleFullScreen()
+{
+	if (fs == true) {
+		setWindowFlags(NULL);
+		fs = false;
+		showMaximized();
+	} else {
+		setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+		fs = true;
+		showMaximized();
+	}
 }
